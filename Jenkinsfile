@@ -18,7 +18,7 @@ pipeline {
             steps{
                 if (fileExists('C:/Users/sai kumar/Jenkins-Demo/index.html'){
                  echo "File C:/Users/sai kumar/Jenkins-Demo/index.html found!"
-                })
+                )
             }
 		}	
     }
