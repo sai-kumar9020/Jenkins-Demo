@@ -14,7 +14,7 @@ pipeline {
                 echo "end TimeStamps"
             }
         }
-		stage(""stage 3"){
+		stage("stage 3"){
             steps{
                 if (fileExists('C:\Users\sai kumar\Jenkins-Demo\index.html'){
                  echo "File C:\Users\sai kumar\Jenkins-Demo\index.html found!"
