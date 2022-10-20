@@ -16,11 +16,13 @@ pipeline {
         }
 		stage("stage 3"){
             steps{
-			def exists=fileExists 'index.html'
-                if (exists ('C:/Users/sai kumar/Jenkins-Demo/index.html'))
-				{
-                 echo "File C:/Users/sai kumar/Jenkins-Demo/index.html found!"
-                }
+                def exists = fileExists 'C:/Users/sai kumar/Jenkins-Demo/index.html'
+
+                  if (exists) {
+                  sh "LINUX SHELL COMMAND"
+                   } else {
+                       println "File doesn't exist"
+                    }
             }
 		}	
     }
