@@ -1,0 +1,45 @@
+export JAVA_HOME=/usr/local/jdk-11.0.14.1+1
+export PATH=${JAVA_HOME}/bin:$PATH
+
+export M2_HOME=/opt/maven
+export PATH=${M2_HOME}/bin:${PATH}
+
+export GRADLE_HOME=/opt/gradle/gradle-7.4
+export PATH=${GRADLE_HOME}/bin:${PATH}
+
+
+export NODE_OPTIONS="--max-old-space-size=5120"
+
+export JENKINS_WORKSPACE='pwd'
+echo ${JENKINS_WORKSPACE}
+
+cp -f /root/ReplicationUI/.npmrc  /var/jenkins/workspace/Replication_Console_UI    //UI JObs npmrc 
+cp -f /root/ReplicationUI/gradle.properties  /var/jenkins/workspace/Replication_Console_UI   //API and UI 
+
+pwd
+java -version
+
+cd ${JENKINS_WORKSPACE}
+
+npm install
+gradle clean build
+
+mv ${JENKINS_WORKSPACE}/build/libs/console.war ${JENKINS_WORKSPACE}/build/libs/replication.war
+ls ${JENKINS_WORKSPACE}/build/libs
+
+cd /var/jenkins/workspace/Replication_Console_UI/build/libs
+BUILD_TIMESTAMP=$(date +'%Y%m%d_%H%M')   
+
+cd /var/jenkins/workspace/
+/var/jenkins/workspace/uigenpom/genpom.sh $BUILD_TIMESTAMP > pom.xml
+
+cd /var/jenkins/workspace/Replication_Console_UI/build/libs
+cp -f replication.war /builds/results/DSM_MAIN/N/replication-dmc-console/replication_ui
+
+cd /var/jenkins/workspace/uigenpom
+cp -f pom.xml /builds/results/DSM_MAIN/N/replication-dmc-console/replication_ui
+
+cp -rf /var/jenkins/workspace/uigenpom/pom.xml /var/jenkins/workspace/Replication_Console_UI/build/libs
+
+cd /var/jenkins/workspace/Replication_Console_UI/build/libs
+mvn deploy:deploy-file -DpomFile=pom.xml -Dfile=replication.war -Durl=(Artifactory url)
