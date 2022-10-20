@@ -14,12 +14,12 @@ pipeline {
                 echo "end TimeStamps"
             }
         }
-		stage("stage 3"){
+		stage("checking a file"){
             steps{
-                def exists = fileExists 'C:/Users/sai kumar/Jenkins-Demo/index.html'
+                def exists = fileExists 'index.html'
 
                   if (exists) {
-                  sh "LINUX SHELL COMMAND"
+                        println "File exist"
                    } else {
                        println "File doesn't exist"
                     }
