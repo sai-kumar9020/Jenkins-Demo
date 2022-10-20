@@ -16,9 +16,9 @@ pipeline {
         }
 		stage("checking a file"){
             steps{
-                def exists = fileExists 'index.html'
+                Boolean bool = fileExists 'index.html'
 
-                  if (exists) {
+                  if (bool) {
                         println "File exist"
                    } else {
                        println "File doesn't exist"
