@@ -16,13 +16,14 @@ pipeline {
         }
 		stage("checking a file"){
             steps{
+			    script{
                 Boolean bool = fileExists 'index.html'
 
                   if (bool) {
                         println "File exist"
                    } else {
                        println "File doesn't exist"
-                    }
+                }   }
             }
 		}	
     }
